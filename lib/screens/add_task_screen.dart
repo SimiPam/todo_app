@@ -141,7 +141,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           // maxLines: (size.height/4).toString(),
                           style: GoogleFonts.poppins(
                             color: AppColors.blackColor,
-                            fontSize: Sizes.dimens_25,
+                            fontSize: Sizes.dimens_22,
                             fontWeight: FontWeight.w400,
                           ),
                           decoration: InputDecoration(
@@ -158,141 +158,100 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       ),
                     ),
                     SizedBox(height: 24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 150.0,
-                              height: 50.0,
-                              child: OutlinedButton(
-                                onPressed: () {
-                                  _pickDate();
-                                },
-                                child: Row(
-                                  // Replace with a Row for horizontal icon + text
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.calendar_today_outlined,
-                                      color: btnDateTextColor,
-                                      // color: Colors.black54,
-                                      size: 15,
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "$dateText",
-                                      style: GoogleFonts.poppins(
-                                        color: btnDateTextColor,
-                                        fontSize: Sizes.dimens_16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
+                        Container(
+                          width: 150.0,
+                          height: 50.0,
+                          child: OutlinedButton(
+                            onPressed: () {
+                              _pickDate();
+                            },
+                            child: Row(
+                              // Replace with a Row for horizontal icon + text
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.calendar_today_outlined,
+                                  color: btnDateTextColor,
+                                  // color: Colors.black54,
+                                  size: 15,
                                 ),
-                                style: OutlinedButton.styleFrom(
-                                  backgroundColor: btnDateColor,
-                                  side: BorderSide(
-                                    // color: AppColors.bluegreyColor,
-                                    color: Colors.black54,
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "$dateText",
+                                  style: GoogleFonts.poppins(
+                                    color: btnDateTextColor,
+                                    fontSize: Sizes.dimens_16,
+                                    fontWeight: FontWeight.w500,
                                   ),
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(18),
-                                    ),
-                                  ),
+                                ),
+                              ],
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: btnDateColor,
+                              side: BorderSide(
+                                // color: AppColors.bluegreyColor,
+                                color: Colors.black54,
+                              ),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(18),
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              width: 118.0,
-                              height: 50.0,
-                              child: OutlinedButton(
-                                onPressed: () {
-                                  // selectedTodoTime(context);
-
-                                  _pickTime();
-                                },
-                                child: Row(
-                                  // Replace with a Row for horizontal icon + text
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.access_alarm_outlined,
-                                      color: btnTextColor,
-                                      // color: Colors.black54,
-                                      size: 15,
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "$_timeText",
-                                      style: GoogleFonts.poppins(
-                                          color: btnTextColor,
-                                          fontSize: Sizes.dimens_16,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                ),
-                                style: OutlinedButton.styleFrom(
-                                  backgroundColor: btnColor,
-                                  side: BorderSide(
-                                    // color: AppColors.bluegreyColor,
-                                    color: Colors.black54,
-                                  ),
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(18))),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                        // Container(
-                        //   width: 56.0,
-                        //   height: 56.0,
-                        //   child: Material(
-                        //     color: AppColors.backgroundColor,
-                        //     borderRadius:
-                        //         BorderRadius.all(Radius.circular(10.0)),
-                        //     elevation: 5.0,
-                        //     child: MaterialButton(
-                        //       onPressed: () {
-                        //         if (titleController.text.isNotEmpty &&
-                        //             descController.text.isNotEmpty) {
-                        //           setState(() {
-                        //             todos.add(TodoModelClass(
-                        //                 title: titleController.text,
-                        //                 description: descController.text,
-                        //                 currentDateTime: DateFormat('EEEE, d')
-                        //                     .format(DateTime.now()),
-                        //                 selectedDate: dateText,
-                        //                 selectedTime: _timeText));
-                        //           });
-                        //           Navigator.pop(context);
-                        //         } else {
-                        //           setState(() {
-                        //             errorMsg =
-                        //                 "Please check that title and description are filled";
-                        //           });
-                        //         }
-                        //       },
-                        //       child: Icon(
-                        //         Icons.check,
-                        //         size: 25,
-                        //         color: AppColors.whiteColor,
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          width: 125.0,
+                          height: 50.0,
+                          child: OutlinedButton(
+                            onPressed: () {
+                              // selectedTodoTime(context);
+
+                              _pickTime();
+                            },
+                            child: Row(
+                              // Replace with a Row for horizontal icon + text
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.access_alarm_outlined,
+                                  color: btnTextColor,
+                                  // color: Colors.black54,
+                                  size: 15,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "$_timeText",
+                                  style: GoogleFonts.poppins(
+                                      color: btnTextColor,
+                                      fontSize: Sizes.dimens_16,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: btnColor,
+                              side: BorderSide(
+                                // color: AppColors.bluegreyColor,
+                                color: Colors.black54,
+                              ),
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(18))),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(height: 34),
@@ -300,10 +259,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        GestureDetector(
+                        InkWell(
                           onTap: () {
                             Navigator.pop(context);
                           },
+                          focusColor: Colors.black,
                           child: Text(
                             "close",
                             style: GoogleFonts.poppins(
@@ -323,7 +283,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             color: AppColors.backgroundColor,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0)),
-                            elevation: 2.0,
+                            elevation: 5.0,
                             child: MaterialButton(
                               onPressed: () {
                                 if (titleController.text.isNotEmpty &&

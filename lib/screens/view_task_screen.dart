@@ -158,7 +158,7 @@ class ViewTaskScreen extends StatelessWidget {
                         child: Material(
                           color: AppColors.backgroundColor,
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          elevation: 2.0,
+                          elevation: 5.0,
                           child: MaterialButton(
                             onPressed: () {
                               Navigator.pop(context);
