@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app/model/todo_model.dart';
 import 'package:todo_app/screens/view_task_screen.dart';
 
-import '../colors.dart';
-import '../sizes.dart';
+import '../theme/colors.dart';
+import '../theme/sizes.dart';
 
 class TaskWidget extends StatelessWidget {
   final TodoModelClass todos;
@@ -64,7 +64,7 @@ class TaskWidget extends StatelessWidget {
             onChanged: onChange,
           ),
           IconSlideAction(
-              caption: "Delete",
+              // caption: "Delete",
               foregroundColor: AppColors.globalButtonColor,
               icon: Icons.delete,
               onTap: onDelete)

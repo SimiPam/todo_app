@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:todo_app/colors.dart';
+import 'package:todo_app/theme/colors.dart';
 import 'package:todo_app/model/todo_list.dart';
 import 'package:todo_app/model/todo_model.dart';
 import 'package:todo_app/screens/view_task_screen.dart';
@@ -9,8 +9,8 @@ import 'package:todo_app/widgets/task_list.dart';
 import 'package:todo_app/widgets/task_widget.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-import '../constants.dart';
-import '../sizes.dart';
+import '../utils/constants.dart';
+import '../theme/sizes.dart';
 import 'add_task_screen.dart';
 
 class TasksScreen extends StatefulWidget {

@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:todo_app/constants.dart';
+import 'package:todo_app/utils/constants.dart';
 import 'package:todo_app/widgets/dialog_container_widget.dart';
 import 'package:todo_app/widgets/filled_button_widget.dart';
 import 'package:todo_app/widgets/datetime_button_widget.dart';
-import '../colors.dart';
-import '../sizes.dart';
+import '../theme/colors.dart';
+import '../theme/sizes.dart';
 
 class AddTaskScreen extends StatefulWidget {
   final Function addTask;
@@ -75,10 +76,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   Center(
                     child: Text(
                       kTasktitle,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4
-                          .copyWith(color: AppColors.blackColor),
+                      style: GoogleFonts.poppins(
+                          fontSize: Sizes.dimens_18,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.blackColor),
                     ),
                   ),
                   SizedBox(
@@ -87,9 +88,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   TextFormField(
                     autofocus: true,
                     cursorColor: AppColors.statementColor,
-                    style: Theme.of(context).textTheme.caption.copyWith(
-                          fontSize: Sizes.dimens_25,
-                        ),
+                    style: GoogleFonts.poppins(
+                      color: AppColors.blackColor,
+                      fontWeight: FontWeight.w400,
+                      fontSize: Sizes.dimens_25,
+                    ),
                     controller: titleController,
                     decoration: InputDecoration(
                       // border: InputBorder.none,
@@ -97,7 +100,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         borderSide: BorderSide(color: AppColors.statementColor),
                       ),
                       labelText: kLabelText,
-                      labelStyle: Theme.of(context).textTheme.caption,
+                      labelStyle: GoogleFonts.poppins(
+                        color: AppColors.blackColor,
+                        fontSize: Sizes.dimens_15,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                   SizedBox(height: Sizes.dimens_24),
@@ -120,10 +127,19 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         controller: descController,
                         cursorColor: AppColors.statementColor,
                         maxLines: null,
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: GoogleFonts.poppins(
+                          color: AppColors.blackColor,
+                          fontSize: Sizes.dimens_22,
+                          fontWeight: FontWeight.w400,
+                        ),
                         decoration: InputDecoration(
                           hintText: kHintText,
-                          hintStyle: Theme.of(context).textTheme.bodyText1,
+                          hintStyle: GoogleFonts.poppins(
+                            color: AppColors.bluegreyColor,
+                            fontStyle: FontStyle.italic,
+                            fontSize: Sizes.dimens_20,
+                            fontWeight: FontWeight.w400,
+                          ),
                           border: InputBorder.none,
                         ),
                       ),
@@ -167,8 +183,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           Navigator.pop(context);
                         },
                         focusColor: AppColors.blackColor,
-                        child: Text("close",
-                            style: Theme.of(context).textTheme.headline2),
+                        child: Text(
+                          "close",
+                          style: GoogleFonts.poppins(
+                            color: Colors.grey[400],
+                            fontSize: Sizes.dimens_20,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ),
                       SizedBox(
                         width: Sizes.dimens_40,
@@ -181,21 +203,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                               descController.text.isNotEmpty) {
                             widget.addTask(titleController.text,
                                 descController.text, dateText, _timeText);
-                            // setState(() {
-                            //   todos.add(TodoModelClass(
-                            //       title: titleController.text,
-                            //       description: descController.text,
-                            //       currentDateTime: DateFormat('EEEE, d')
-                            //           .format(DateTime.now()),
-                            //       selectedDate: dateText,
-                            //       selectedTime: _timeText));
-                            // });
-
                           } else {
                             widget.errorTask();
-                            // setState(() {
-                            //   errorMsg = kErrorMsg;
-                            // });
                           }
                         },
                       ),
@@ -203,8 +212,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   ),
                   SizedBox(height: Sizes.dimens_24),
                   Center(
-                    child: Text(kErrorMsg,
-                        style: Theme.of(context).textTheme.headline3),
+                    child: Text(
+                      kErrorMsg,
+                      style: GoogleFonts.poppins(
+                        color: AppColors.borderColor,
+                        fontSize: Sizes.dimens_12,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                   ),
                 ],
               ),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/sizes.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_app/theme/sizes.dart';
 
-import '../colors.dart';
+import '../theme/colors.dart';
 
 class FilledBtn extends StatelessWidget {
   final VoidCallback onPress;
@@ -28,7 +29,11 @@ class FilledBtn extends StatelessWidget {
           onPressed: onPress,
           child: Text(
             btnText,
-            style: Theme.of(context).textTheme.headline4,
+            style: GoogleFonts.poppins(
+              color: AppColors.whiteColor,
+              fontSize: Sizes.dimens_18,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ),

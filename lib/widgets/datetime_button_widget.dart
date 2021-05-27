@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:todo_app/colors.dart';
+import 'package:todo_app/theme/colors.dart';
 
-import '../sizes.dart';
+import '../theme/sizes.dart';
 
 class DateTimeBtn extends StatelessWidget {
   const DateTimeBtn({

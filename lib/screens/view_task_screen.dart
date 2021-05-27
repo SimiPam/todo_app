@@ -6,9 +6,9 @@ import 'package:todo_app/widgets/dialog_container_widget.dart';
 import 'package:todo_app/widgets/filled_button_widget.dart';
 import 'package:todo_app/widgets/outlined_btn_widget.dart';
 
-import '../colors.dart';
-import '../constants.dart';
-import '../sizes.dart';
+import '../theme/colors.dart';
+import '../utils/constants.dart';
+import '../theme/sizes.dart';
 
 class ViewTaskScreen extends StatelessWidget {
   final TodoModelClass todo;
@@ -67,11 +67,21 @@ class ViewTaskScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(kDescriptionText,
-                      style: Theme.of(context).textTheme.caption),
+                  Text(
+                    kDescriptionText,
+                    style: GoogleFonts.poppins(
+                      color: AppColors.blackColor,
+                      fontSize: Sizes.dimens_15,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
                   Text(
                     statusText,
-                    style: Theme.of(context).textTheme.headline3,
+                    style: GoogleFonts.poppins(
+                      color: AppColors.borderColor,
+                      fontSize: Sizes.dimens_12,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ],
               ),
@@ -83,7 +93,11 @@ class ViewTaskScreen extends StatelessWidget {
                   child: Container(
                     child: Text(
                       todo.description,
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: GoogleFonts.poppins(
+                        color: AppColors.blackColor,
+                        fontSize: Sizes.dimens_22,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                     width: double.infinity,
                     margin: EdgeInsets.symmetric(
