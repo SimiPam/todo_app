@@ -14,7 +14,7 @@ class TaskWidget extends StatelessWidget {
   final VoidCallback onDone;
   final Function onChange;
 
-   TaskWidget({
+  TaskWidget({
     @required this.todos,
     // @required this.onClicked,
     this.onDelete,
@@ -47,7 +47,7 @@ class TaskWidget extends StatelessWidget {
     txtColor = AppColors.whiteColor;
     strike = TextDecoration.none;
     ellipsColor = AppColors.ellipseColor;
-   todos.doneState = false;
+    todos.doneState = false;
     checkSwitch = 1;
   }
 
@@ -95,7 +95,7 @@ class TaskWidget extends StatelessWidget {
               ),
             ),
             trailing: Text(
-             todos.currentDateTime,
+              todos.currentDateTime,
               style: GoogleFonts.poppins(
                 color: Colors.grey[400],
                 height: 0.6,
@@ -129,9 +129,8 @@ class TaskWidget extends StatelessWidget {
                 context: context,
                 builder: (context) => ViewTaskScreen(
                   todo: todos,
-                  statusText: todos.doneState
-                      ? "task completed"
-                      : 'to be completed',
+                  statusText:
+                      todos.doneState ? "task completed" : 'to be completed',
                 ),
               );
             },
