@@ -4,6 +4,8 @@ class AppColors {
   AppColors._();
   static Color whiteColor = Color(0xFFFFFFFF);
   static Color blackColor = Color(0xFF000000);
+  static Color greyColor = Colors.grey[100];
+  static Color black54Color = Colors.black54;
   static Color backgroundColor = Color(0xFF1C222E);
   static Color buttonColor = Color(0xFF181A2E);
   static Color statementColor = Color(0xFF3965E3);

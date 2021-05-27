@@ -9,6 +9,7 @@ import 'package:todo_app/widgets/task_list.dart';
 import 'package:todo_app/widgets/task_widget.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+import '../constants.dart';
 import '../sizes.dart';
 import 'add_task_screen.dart';
 
@@ -31,6 +32,7 @@ class _TasksScreenState extends State<TasksScreen> {
         selectedTime: null));
   }
 
+  String error = "";
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -123,8 +125,29 @@ class _TasksScreenState extends State<TasksScreen> {
                       ),
                       onPressed: () {
                         showDialog(
-                            context: context,
-                            builder: (context) => AddTaskScreen());
+                          context: context,
+                          builder: (context) => AddTaskScreen(
+                            addTask: (titleText, descriptionText, dateText,
+                                timeText) {
+                              setState(() {
+                                todos.add(TodoModelClass(
+                                    title: titleText,
+                                    description: descriptionText,
+                                    currentDateTime: DateFormat('EEEE, d')
+                                        .format(DateTime.now()),
+                                    selectedDate: dateText,
+                                    selectedTime: timeText));
+                              });
+                              Navigator.pop(context);
+                            },
+                            errorTask: () {
+                              setState(() {
+                                kErrorMsg =
+                                    "Please check that title and description are filled";
+                              });
+                            },
+                          ),
+                        );
                       },
                     ),
                     bottom: 20,

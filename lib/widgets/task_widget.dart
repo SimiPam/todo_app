@@ -7,23 +7,20 @@ import 'package:todo_app/screens/view_task_screen.dart';
 import '../colors.dart';
 import '../sizes.dart';
 
-class TaskWidget extends StatefulWidget {
+class TaskWidget extends StatelessWidget {
   final TodoModelClass todos;
-  final VoidCallback onClicked;
+  // final VoidCallback onClicked;
   final VoidCallback onDelete;
   final VoidCallback onDone;
+  final Function onChange;
 
-  const TaskWidget({
+   TaskWidget({
     @required this.todos,
-    @required this.onClicked,
+    // @required this.onClicked,
     this.onDelete,
     this.onDone,
+    this.onChange,
   });
-  @override
-  _TaskWidgetState createState() => _TaskWidgetState();
-}
-
-class _TaskWidgetState extends State<TaskWidget> {
 // class TaskWidget extends StatelessWidget {
   // void removeItem(int index) {
   //   items.remove(todos);
@@ -40,7 +37,7 @@ class _TaskWidgetState extends State<TaskWidget> {
     txtColor = Colors.grey;
     strike = TextDecoration.lineThrough;
     ellipsColor = Colors.grey;
-    widget.todos.doneState = true;
+    todos.doneState = true;
     checkSwitch = 2;
   }
 
@@ -50,7 +47,7 @@ class _TaskWidgetState extends State<TaskWidget> {
     txtColor = AppColors.whiteColor;
     strike = TextDecoration.none;
     ellipsColor = AppColors.ellipseColor;
-    widget.todos.doneState = false;
+   todos.doneState = false;
     checkSwitch = 1;
   }
 
@@ -62,51 +59,51 @@ class _TaskWidgetState extends State<TaskWidget> {
           Checkbox(
             activeColor: Colors.transparent,
             checkColor: AppColors.ongoingColor,
-            value: check,
+            value: todos.doneState,
             tristate: false,
-            onChanged: (bool isChecked) {
-              setState(() {
-                if (checkSwitch == 1) {
-                  onCheck();
-                } else {
-                  unCheck();
-                }
-              });
-            },
+            onChanged: onChange,
           ),
           IconSlideAction(
               caption: "Delete",
               foregroundColor: AppColors.globalButtonColor,
               icon: Icons.delete,
-              onTap: widget.onDelete)
+              onTap: onDelete)
         ],
         child: Container(
           margin: EdgeInsets.all(8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(40),
-            color: bckColor,
+            color: todos.doneState
+                ? AppColors.inactiveColor
+                : AppColors.backgroundColor,
           ),
           child: ListTile(
             title: Text(
-              widget.todos.title,
+              todos.title,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.poppins(
-                color: txtColor,
+                color: todos.doneState
+                    ? AppColors.greyColor
+                    : AppColors.whiteColor,
                 decorationColor: Colors.black54,
                 decorationStyle: TextDecorationStyle.solid,
-                decoration: strike,
+                decoration: todos.doneState
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none,
                 fontSize: Sizes.dimens_20,
                 fontWeight: FontWeight.w500,
               ),
             ),
             trailing: Text(
-              widget.todos.currentDateTime,
+             todos.currentDateTime,
               style: GoogleFonts.poppins(
                 color: Colors.grey[400],
                 height: 0.6,
                 decorationColor: Colors.black54,
                 decorationStyle: TextDecorationStyle.solid,
-                decoration: strike,
+                decoration: todos.doneState
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none,
                 fontSize: Sizes.dimens_10,
                 fontWeight: FontWeight.w400,
               ),
@@ -115,7 +112,9 @@ class _TaskWidgetState extends State<TaskWidget> {
               margin: EdgeInsets.only(top: 3.5),
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: ellipsColor,
+                  color: todos.doneState
+                      ? AppColors.greyColor
+                      : AppColors.ellipseColor,
                   width: Sizes.dimens_4,
                 ),
                 borderRadius: BorderRadius.all(
@@ -129,8 +128,10 @@ class _TaskWidgetState extends State<TaskWidget> {
               showDialog(
                 context: context,
                 builder: (context) => ViewTaskScreen(
-                  todo: widget.todos,
-                  statusText: check ? "task completed" : 'to be completed',
+                  todo: todos,
+                  statusText: todos.doneState
+                      ? "task completed"
+                      : 'to be completed',
                 ),
               );
             },

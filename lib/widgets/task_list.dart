@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/model/todo_list.dart';
-import 'package:todo_app/widgets/task_tile.dart';
 import 'package:todo_app/widgets/task_widget.dart';
 
-import 'item_widget.dart';
 
 class TaskListBuilder extends StatefulWidget {
   final ScrollController controllerScroll;
@@ -20,6 +18,11 @@ class _TaskListBuilderState extends State<TaskListBuilder> {
       itemBuilder: (context, index) {
         return TaskWidget(
           todos: todos[index],
+          onChange: (isChecked) {
+            setState(() {
+              todos[index].toggleDone();
+            });
+          },
           onDelete: () {
             setState(() {
               todos.removeAt(index);

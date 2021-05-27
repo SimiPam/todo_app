@@ -14,4 +14,8 @@ class TodoModelClass {
     this.description,
     this.doneState = false,
   });
+
+  void toggleDone() {
+    doneState = !doneState;
+  }
 }
