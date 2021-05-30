@@ -145,7 +145,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       child: TextFormField(
                         initialValue: description,
                         // controller: descController,
-                        onChanged:(desc) {
+                        onChanged: (desc) {
                           description = desc;
                         },
                         cursorColor: AppColors.statementColor,
