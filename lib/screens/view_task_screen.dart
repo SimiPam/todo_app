@@ -144,7 +144,7 @@ class ViewTaskScreen extends StatelessWidget {
                   children: [
                     FilledBtn(
                       widthPad: Sizes.dimens_236,
-                      btnText: kSaveBtn.toUpperCase(),
+                      btnText: "Close".toUpperCase(),
                       onPress: () {
                         Navigator.pop(context);
                       },

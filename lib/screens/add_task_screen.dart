@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/database/todo_db.dart';
 import 'package:todo_app/model/todo_model.dart';
+import 'package:todo_app/screens/tasks_screen.dart';
 import 'package:todo_app/utils/constants.dart';
 import 'package:todo_app/widgets/dialog_container_widget.dart';
 import 'package:todo_app/widgets/filled_button_widget.dart';
@@ -32,17 +33,17 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   Color btnColor = Colors.transparent;
   Color btnDateColor = Colors.transparent;
   String errorMsg = "";
-  String title = "";
-  String description = "";
+  String title;
+  String description;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (widget.todo != null) {
-      title = widget.todo.title;
-      description = widget.todo.description;
-    }
+    // if (widget.todo != null) {
+    title = widget.todo.title ?? "";
+    description = widget.todo.description ?? "";
+    // }
   }
 
   DateTime datePick;
@@ -112,7 +113,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       fontSize: Sizes.dimens_25,
                     ),
                     initialValue: title,
-                    controller: titleController,
+                    // controller: titleController,
+                    onChanged: (tit) {
+                      description = tit;
+                    },
                     decoration: InputDecoration(
                       // border: InputBorder.none,
                       focusedBorder: UnderlineInputBorder(
@@ -222,25 +226,25 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         widthPad: Sizes.dimens_106,
                         btnText: kSaveBtn.toUpperCase(),
                         onPress: () async {
-                          if (titleController.text.isNotEmpty &&
-                              descController.text.isNotEmpty) {
-                            final isUpdating = widget.todo != null;
-
-                            if (isUpdating) {
-                              final note = widget.todo.copy(
+                          if (title.isNotEmpty && description.isNotEmpty) {
+                            if (widget.todo != null) {
+                              final updatedTask = widget.todo.copy(
                                 title: title,
                                 description: description,
                               );
 
-                              await TodoDatabase.instance.update(note);
+                              await TodoDatabase.instance.update(updatedTask);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => TasksScreen()),
+                              );
                             } else {
                               widget.addTask(
                                 title,
                                 description,
                               );
                             }
-
-                            Navigator.pop(context);
                           } else {
                             setState(() {
                               errorMsg =

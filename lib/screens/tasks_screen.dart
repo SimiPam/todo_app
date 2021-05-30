@@ -71,6 +71,7 @@ class _TasksScreenState extends State<TasksScreen> {
       //     selectedDate: dateText,
       //     selectedTime: timeText));
     });
+    Navigator.pop(context);
   }
 
   // Future updateTask(titleText, descriptionText, wTodo) async {
