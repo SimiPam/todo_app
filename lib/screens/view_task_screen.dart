@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_app/model/todo_model.dart';
 import 'package:todo_app/widgets/dialog_container_widget.dart';
 import 'package:todo_app/widgets/filled_button_widget.dart';
@@ -9,6 +10,7 @@ import 'package:todo_app/widgets/outlined_btn_widget.dart';
 import '../theme/colors.dart';
 import '../utils/constants.dart';
 import '../theme/sizes.dart';
+import 'add_task_screen.dart';
 
 class ViewTaskScreen extends StatelessWidget {
   final TodoModelClass todo;
@@ -51,7 +53,9 @@ class ViewTaskScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.caption,
                       children: <TextSpan>[
                         TextSpan(
-                            text: todo.currentDateTime,
+                            // text: todo.currentDateTime,
+                            text: DateFormat('EEEE, d')
+                                .format(todo.currentDateTime),
                             style: Theme.of(context).textTheme.subtitle1),
                       ],
                     ),
@@ -150,7 +154,14 @@ class ViewTaskScreen extends StatelessWidget {
                         Icons.edit_outlined,
                         color: AppColors.backgroundColor,
                       ),
-                      onPress: () {},
+                      onPress: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AddTaskScreen(
+                            todo: todo,
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

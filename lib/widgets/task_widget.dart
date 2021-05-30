@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_app/model/todo_model.dart';
 import 'package:todo_app/screens/view_task_screen.dart';
 
@@ -11,45 +12,16 @@ class TaskWidget extends StatelessWidget {
   final TodoModelClass todos;
   // final VoidCallback onClicked;
   final VoidCallback onDelete;
-  final VoidCallback onDone;
+  // final VoidCallback onDone;
   final Function onChange;
 
   TaskWidget({
     @required this.todos,
     // @required this.onClicked,
     this.onDelete,
-    this.onDone,
+    // this.onDone,
     this.onChange,
   });
-// class TaskWidget extends StatelessWidget {
-  // void removeItem(int index) {
-  //   items.remove(todos);
-  TextDecoration strike = TextDecoration.none;
-  bool check = false;
-  int checkSwitch = 1;
-  Color bckColor = AppColors.backgroundColor;
-  Color txtColor = AppColors.whiteColor;
-  Color ellipsColor = AppColors.ellipseColor;
-
-  void onCheck() {
-    check = true;
-    bckColor = AppColors.inactiveColor;
-    txtColor = Colors.grey;
-    strike = TextDecoration.lineThrough;
-    ellipsColor = Colors.grey;
-    todos.doneState = true;
-    checkSwitch = 2;
-  }
-
-  void unCheck() {
-    check = false;
-    bckColor = AppColors.backgroundColor;
-    txtColor = AppColors.whiteColor;
-    strike = TextDecoration.none;
-    ellipsColor = AppColors.ellipseColor;
-    todos.doneState = false;
-    checkSwitch = 1;
-  }
 
   @override
   Widget build(BuildContext context) => Slidable(
@@ -95,7 +67,8 @@ class TaskWidget extends StatelessWidget {
               ),
             ),
             trailing: Text(
-              todos.currentDateTime,
+              // todos.currentDateTime,
+              DateFormat('EEEE, d').format(todos.currentDateTime),
               style: GoogleFonts.poppins(
                 color: Colors.grey[400],
                 height: 0.6,

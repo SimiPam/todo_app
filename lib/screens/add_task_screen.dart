@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app/database/todo_db.dart';
+import 'package:todo_app/model/todo_model.dart';
 import 'package:todo_app/utils/constants.dart';
 import 'package:todo_app/widgets/dialog_container_widget.dart';
 import 'package:todo_app/widgets/filled_button_widget.dart';
@@ -12,8 +14,9 @@ import '../theme/sizes.dart';
 class AddTaskScreen extends StatefulWidget {
   final Function addTask;
   final Function errorTask;
+  final TodoModelClass todo;
 
-  const AddTaskScreen({this.addTask, this.errorTask});
+  const AddTaskScreen({this.addTask, this.errorTask, this.todo});
   @override
   _AddTaskScreenState createState() => _AddTaskScreenState();
 }
@@ -29,12 +32,27 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   Color btnColor = Colors.transparent;
   Color btnDateColor = Colors.transparent;
   String errorMsg = "";
+  String title = "";
+  String description = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.todo != null) {
+      title = widget.todo.title;
+      description = widget.todo.description;
+    }
+  }
+
+  DateTime datePick;
+  TimeOfDay timePick;
 
   Future _pickDate() async {
-    DateTime datePick = await showDatePicker(
+    datePick = await showDatePicker(
         context: context,
         initialDate: new DateTime.now(),
-        firstDate: new DateTime.now().add(Duration(days: -365)),
+        firstDate: new DateTime.now().add(Duration(days: 0)),
         lastDate: new DateTime.now().add(Duration(days: 365)));
     if (datePick != null)
       setState(() {
@@ -45,7 +63,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   }
 
   Future<TimeOfDay> _pickTime() async {
-    TimeOfDay timePick = await showTimePicker(
+    timePick = await showTimePicker(
         context: context, initialTime: new TimeOfDay.now());
     if (timePick != null) {
       setState(() {
@@ -93,6 +111,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       fontWeight: FontWeight.w400,
                       fontSize: Sizes.dimens_25,
                     ),
+                    initialValue: title,
                     controller: titleController,
                     decoration: InputDecoration(
                       // border: InputBorder.none,
@@ -123,8 +142,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       constraints: BoxConstraints(
                         maxHeight: size.height / Sizes.dimens_2,
                       ),
-                      child: TextField(
-                        controller: descController,
+                      child: TextFormField(
+                        initialValue: description,
+                        // controller: descController,
+                        onChanged:(desc) {
+                          description = desc;
+                        },
                         cursorColor: AppColors.statementColor,
                         maxLines: null,
                         style: GoogleFonts.poppins(
@@ -198,13 +221,31 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       FilledBtn(
                         widthPad: Sizes.dimens_106,
                         btnText: kSaveBtn.toUpperCase(),
-                        onPress: () {
+                        onPress: () async {
                           if (titleController.text.isNotEmpty &&
                               descController.text.isNotEmpty) {
-                            widget.addTask(titleController.text,
-                                descController.text, dateText, _timeText);
+                            final isUpdating = widget.todo != null;
+
+                            if (isUpdating) {
+                              final note = widget.todo.copy(
+                                title: title,
+                                description: description,
+                              );
+
+                              await TodoDatabase.instance.update(note);
+                            } else {
+                              widget.addTask(
+                                title,
+                                description,
+                              );
+                            }
+
+                            Navigator.pop(context);
                           } else {
-                            widget.errorTask();
+                            setState(() {
+                              errorMsg =
+                                  "Please check that title and description are filled";
+                            });
                           }
                         },
                       ),
@@ -213,7 +254,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   SizedBox(height: Sizes.dimens_24),
                   Center(
                     child: Text(
-                      kErrorMsg,
+                      errorMsg,
                       style: GoogleFonts.poppins(
                         color: AppColors.borderColor,
                         fontSize: Sizes.dimens_12,

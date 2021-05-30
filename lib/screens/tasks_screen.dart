@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/theme/colors.dart';
-import 'package:todo_app/model/todo_list.dart';
 import 'package:todo_app/model/todo_model.dart';
 import 'package:todo_app/screens/view_task_screen.dart';
 import 'package:todo_app/widgets/task_list.dart';
 import 'package:todo_app/widgets/task_widget.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
+import 'package:todo_app/database/todo_db.dart';
 import '../utils/constants.dart';
 import '../theme/sizes.dart';
 import 'add_task_screen.dart';
@@ -19,18 +18,71 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
+  List<TodoModelClass> taskList;
+  bool isLoading = false;
+
+  Future refreshNotes() async {
+    setState(() => isLoading = true);
+    taskList = await TodoDatabase.instance.readAllNotes();
+    setState(() => isLoading = false);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    todos.add(TodoModelClass(
-        title: "Add A New Task",
-        description: "none",
-        currentDateTime: DateFormat('EEEE, d').format(DateTime.now()),
-        selectedDate: null,
-        selectedTime: null));
+    refreshNotes();
   }
+
+  @override
+  void dispose() {
+    TodoDatabase.instance.close();
+
+    super.dispose();
+  }
+
+  // DateFormat('EEEE, d').format(DateTime.parse(json[NoteFields.time])
+
+  // DateTime.parse(json[NoteFields.time] as String)
+
+  Future addNewTask(titleText, descriptionText) async {
+    final task = TodoModelClass(
+      title: titleText,
+      description: descriptionText,
+      currentDateTime: DateTime.now(),
+      // selectedDate: datePick,
+      // selectedTime: timePick,
+    );
+    await TodoDatabase.instance.create(task);
+    setState(() {
+      taskList.add(TodoModelClass(
+        title: titleText,
+        description: descriptionText,
+        currentDateTime: DateTime.now(),
+        // selectedDate: datePick,
+        // selectedTime: timePick,
+      ));
+
+      // todos.add(TodoModelClass(
+      //     title: titleText,
+      //     description: descriptionText,
+      //     currentDateTime: DateFormat('EEEE, d')
+      //         .format(DateTime.now()),
+      //     selectedDate: dateText,
+      //     selectedTime: timeText));
+    });
+  }
+
+  // Future updateTask(titleText, descriptionText, wTodo) async {
+  //
+  //   final task = wTodo.copy(
+  //     title: titleText,
+  //     description: descriptionText,
+  //   );
+  //
+  //   await TodoDatabase.instance.update(task);
+  //
+  // }
 
   String error = "";
   @override
@@ -98,6 +150,8 @@ class _TasksScreenState extends State<TasksScreen> {
                     ),
                     child: TaskListBuilder(
                       controllerScroll: scrolController,
+                      todoes: taskList,
+                      isLoading: isLoading,
                     ),
                   ),
                   Positioned(
@@ -127,18 +181,20 @@ class _TasksScreenState extends State<TasksScreen> {
                         showDialog(
                           context: context,
                           builder: (context) => AddTaskScreen(
-                            addTask: (titleText, descriptionText, dateText,
-                                timeText) {
-                              setState(() {
-                                todos.add(TodoModelClass(
-                                    title: titleText,
-                                    description: descriptionText,
-                                    currentDateTime: DateFormat('EEEE, d')
-                                        .format(DateTime.now()),
-                                    selectedDate: dateText,
-                                    selectedTime: timeText));
-                              });
-                              Navigator.pop(context);
+                            addTask: (titleText, descriptionText) async {
+                              // setState(() {
+                              //   todos.add(TodoModelClass(
+                              //       title: titleText,
+                              //       description: descriptionText,
+                              //       currentDateTime: DateFormat('EEEE, d')
+                              //           .format(DateTime.now()),
+                              //       selectedDate: dateText,
+                              //       selectedTime: timeText));
+                              // });
+                              await addNewTask(
+                                titleText,
+                                descriptionText,
+                              );
                             },
                             errorTask: () {
                               setState(() {
