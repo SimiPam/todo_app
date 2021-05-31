@@ -54,36 +54,16 @@ class _TasksScreenState extends State<TasksScreen> {
       // selectedTime: timePick,
     );
     await TodoDatabase.instance.create(task);
-    setState(() {
-      taskList.add(TodoModelClass(
-        title: titleText,
-        description: descriptionText,
-        currentDateTime: DateTime.now(),
-        // selectedDate: datePick,
-        // selectedTime: timePick,
-      ));
-
-      // todos.add(TodoModelClass(
-      //     title: titleText,
-      //     description: descriptionText,
-      //     currentDateTime: DateFormat('EEEE, d')
-      //         .format(DateTime.now()),
-      //     selectedDate: dateText,
-      //     selectedTime: timeText));
-    });
     Navigator.pop(context);
   }
 
-  // Future updateTask(titleText, descriptionText, wTodo) async {
-  //
-  //   final task = wTodo.copy(
+  // todos.add(TodoModelClass(
   //     title: titleText,
   //     description: descriptionText,
-  //   );
-  //
-  //   await TodoDatabase.instance.update(task);
-  //
-  // }
+  //     currentDateTime: DateFormat('EEEE, d')
+  //         .format(DateTime.now()),
+  //     selectedDate: dateText,
+  //     selectedTime: timeText));
 
   String error = "";
   @override
@@ -183,24 +163,18 @@ class _TasksScreenState extends State<TasksScreen> {
                           context: context,
                           builder: (context) => AddTaskScreen(
                             addTask: (titleText, descriptionText) async {
-                              // setState(() {
-                              //   todos.add(TodoModelClass(
-                              //       title: titleText,
-                              //       description: descriptionText,
-                              //       currentDateTime: DateFormat('EEEE, d')
-                              //           .format(DateTime.now()),
-                              //       selectedDate: dateText,
-                              //       selectedTime: timeText));
-                              // });
                               await addNewTask(
                                 titleText,
                                 descriptionText,
                               );
-                            },
-                            errorTask: () {
                               setState(() {
-                                kErrorMsg =
-                                    "Please check that title and description are filled";
+                                taskList.add(TodoModelClass(
+                                  title: titleText,
+                                  description: descriptionText,
+                                  currentDateTime: DateTime.now(),
+                                  // selectedDate: datePick,
+                                  // selectedTime: timePick,
+                                ));
                               });
                             },
                           ),

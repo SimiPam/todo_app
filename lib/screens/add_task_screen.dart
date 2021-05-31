@@ -23,8 +23,8 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
-  TextEditingController titleController = TextEditingController();
-  TextEditingController descController = TextEditingController();
+  // TextEditingController titleController = TextEditingController();
+  // TextEditingController descController = TextEditingController();
 
   String dateText = "ddmmyy";
   String _timeText = "00:00";
@@ -33,17 +33,17 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   Color btnColor = Colors.transparent;
   Color btnDateColor = Colors.transparent;
   String errorMsg = "";
-  String title;
-  String description;
+  String title = "";
+  String description = "";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // if (widget.todo != null) {
-    title = widget.todo.title ?? "";
-    description = widget.todo.description ?? "";
-    // }
+    if (widget.todo != null) {
+      title = widget.todo.title;
+      description = widget.todo.description;
+    }
   }
 
   DateTime datePick;
@@ -115,7 +115,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     initialValue: title,
                     // controller: titleController,
                     onChanged: (tit) {
-                      description = tit;
+                      setState(() {
+                        title = tit;
+                      });
                     },
                     decoration: InputDecoration(
                       // border: InputBorder.none,
@@ -150,7 +152,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         initialValue: description,
                         // controller: descController,
                         onChanged: (desc) {
-                          description = desc;
+                          setState(() {
+                            description = desc;
+                          });
                         },
                         cursorColor: AppColors.statementColor,
                         maxLines: null,
