@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:todo_app/database/todo_db.dart';
 import 'package:todo_app/model/todo_model.dart';
 import 'package:todo_app/screens/tasks_screen.dart';
+import 'package:todo_app/screens/view_task_screen.dart';
 import 'package:todo_app/utils/constants.dart';
 import 'package:todo_app/widgets/dialog_container_widget.dart';
 import 'package:todo_app/widgets/filled_button_widget.dart';
@@ -115,9 +116,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     initialValue: title,
                     // controller: titleController,
                     onChanged: (tit) {
-                      setState(() {
-                        title = tit;
-                      });
+                      if (tit.isNotEmpty) {
+                        setState(() {
+                          title = tit;
+                        });
+                      }
                     },
                     decoration: InputDecoration(
                       // border: InputBorder.none,
@@ -152,9 +155,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         initialValue: description,
                         // controller: descController,
                         onChanged: (desc) {
-                          setState(() {
-                            description = desc;
-                          });
+                          if (desc.isNotEmpty) {
+                            setState(() {
+                              description = desc;
+                            });
+                          }
                         },
                         cursorColor: AppColors.statementColor,
                         maxLines: null,
@@ -230,8 +235,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         widthPad: Sizes.dimens_106,
                         btnText: kSaveBtn.toUpperCase(),
                         onPress: () async {
-                          if (title.isNotEmpty && description.isNotEmpty) {
-                            if (widget.todo != null) {
+                          if (title.isEmpty && description.isEmpty) {
+                            setState(() {
+                              errorMsg =
+                                  "Please check that title and description are filled";
+                            });
+                          } else {
+                            final isUpdating = widget.todo != null;
+                            if (isUpdating) {
                               final updatedTask = widget.todo.copy(
                                 title: title,
                                 description: description,
@@ -249,11 +260,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                 description,
                               );
                             }
-                          } else {
-                            setState(() {
-                              errorMsg =
-                                  "Please check that title and description are filled";
-                            });
                           }
                         },
                       ),

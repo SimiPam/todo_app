@@ -154,7 +154,7 @@ class ViewTaskScreen extends StatelessWidget {
                         Icons.edit_outlined,
                         color: AppColors.backgroundColor,
                       ),
-                      onPress: () {
+                      onPress: () async {
                         showDialog(
                           context: context,
                           builder: (context) => AddTaskScreen(
