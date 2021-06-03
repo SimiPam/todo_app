@@ -48,23 +48,10 @@ CREATE TABLE $table (
   ${Todo.currentDateTime} $textType
   )
 ''');
-
-    // firstTodo();
   }
 
-//   ${Todo.selectedDate} $textType,
-// ${Todo.selectedTime} $textType,
   Future<TodoModelClass> create(TodoModelClass todo) async {
     final db = await instance.database;
-
-    // final json = todo.toJson();
-    // final columns =
-    //     '${Todo.title}, ${Todo.description},  ${Todo.currentDateTime}, ${Todo.doneState}';
-    // final values =
-    //     '${json[NoteFields.title]}, ${json[NoteFields.description]}, ${json[NoteFields.time]}';
-    // final id = await db
-    //     .rawInsert('INSERT INTO table_name ($columns) VALUES ($values)');
-
     final id = await db.insert(table, todo.toJson());
     return todo.copy(id: id);
   }
@@ -90,9 +77,6 @@ CREATE TABLE $table (
     final db = await instance.database;
 
     final orderBy = '${Todo.currentDateTime} ASC';
-    // final result =
-    //     await db.rawQuery('SELECT * FROM $tableNotes ORDER BY $orderBy');
-    // , orderBy: orderBy
     final result = await db.query(table, orderBy: orderBy);
 
     return result.map((json) => TodoModelClass.fromJson(json)).toList();
